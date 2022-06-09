@@ -1,0 +1,33 @@
+CREATE TABLE store (
+    id INTEGER primary key,
+    aisle INTEGER,
+    item TEXT,
+    quantity INTEGER,
+    price REAL
+    );
+    
+INSERT INTO store VALUES 
+    (1,1,"apple",5,1.99),
+    (2,1,"oranges",6,2.99),
+    (3,1,"banana", 5, 3.99),
+    (4,1,"kiwi",5,2.39),
+    (5,2,"watermelon",7,8.99),
+    (6,2,"phone",10,39.99),
+    (7,2,"laptop", 15,129.99),
+    (8,2,"mouse",4, 9.99),
+    (9,2,"wire", 10,4.99),
+    (10,2,"keyboard",8,14.99),
+    (11,3,"knife",10,9.99),
+    (12,3,"spoon",11, 1.99),
+    (13,3,"fork",25,1.99),
+    (14,3, "plate", 15, 7.99),
+    (15,3, "napkin", 50, 1.50);
+    
+/*Viewing the entire table organized in an easy to read format with 2 parameters: aisle number in ascending order and price in descending order.*/
+SELECT * FROM store ORDER BY aisle asc, price desc;
+
+/*Identifying the most expensive object by price and listing its name and the aisle number it's located in.*/
+SELECT aisle, item, MAX(price) FROM store;
+
+/*Identifying the least expensive object in each aisle by name and price*/
+SELECT aisle, item, MIN(price) FROM store GROUP BY aisle;
