@@ -24,10 +24,12 @@ INSERT INTO store VALUES
     (15,3, "napkin", 50, 1.50);
     
 /*Viewing the entire table organized in an easy to read format with 2 parameters: aisle number in ascending order and price in descending order.*/
-SELECT * FROM store ORDER BY aisle asc, price desc;
+SELECT * FROM store 
+ORDER BY aisle asc, price desc;
 
 /*Identifying the most expensive object by price and listing its name and the aisle number it's located in.*/
 SELECT aisle, item, MAX(price) FROM store;
 
 /*Identifying the least expensive object in each aisle by name and price*/
-SELECT aisle, item, MIN(price) FROM store GROUP BY aisle;
+SELECT aisle, item, MIN(price) FROM store 
+GROUP BY aisle;
