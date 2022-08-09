@@ -1,3 +1,3 @@
 # SQL
 
-**Welcome to my SQL portfolio! This code repository contains examples of SQL I've written. Feel free to take a look and reach out if you have any questions: tonyvuong3@live.ca**
+**Welcome to my SQL portfolio! This code repository contains examples of SQL I've written. My queries have notes attached to them to explain the results displayed with the various commands I've worked with. Feel free to explore my exmaples and reach out if you have any questions: tonyvuong3@live.ca**
