@@ -24,4 +24,4 @@ SELECT title FROM songs;
 SELECT title FROM songs WHERE mood = "epic" OR released >1990;
 
 /* Displaying only the title where the mood column returns epic, the released column returns greater than 1990 and the duration returns less than 240 seconds.  */
-SELECT title FROM songs WHERE mood= "epic" AND released >1990 AND duration <240 from the table called songs;
+SELECT title FROM songs WHERE mood = "epic" AND released >1990 AND duration <240 from the table called songs;
