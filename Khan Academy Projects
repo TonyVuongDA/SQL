@@ -1,3 +1,5 @@
+--Design a Store Database: Use of Aggregate Functions, GROUP BY
+
 CREATE TABLE store (
     id INTEGER primary key,
     aisle INTEGER,
@@ -33,3 +35,7 @@ SELECT aisle, item, MAX(price) FROM store;
 /*Identifying the least expensive object in each aisle by name and price*/
 SELECT aisle, item, MIN(price) FROM store 
 GROUP BY aisle;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
