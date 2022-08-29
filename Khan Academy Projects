@@ -69,3 +69,279 @@ SELECT title FROM songs WHERE mood = "epic" OR released >1990;
 SELECT title FROM songs WHERE mood = "epic" AND released >1990 AND duration <240 from the table called songs;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Playlist Maker: Use of WHERE, IN, Subqueries
+
+CREATE TABLE artists (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    country TEXT,
+    genre TEXT);
+
+INSERT INTO artists (name, country, genre)
+    VALUES ("Taylor Swift", "US", "Pop");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Led Zeppelin", "US", "Hard rock");
+INSERT INTO artists (name, country, genre)
+    VALUES ("ABBA", "Sweden", "Disco");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Queen", "UK", "Rock");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Celine Dion", "Canada", "Pop");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Meatloaf", "US", "Hard rock");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Garth Brooks", "US", "Country");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Shania Twain", "Canada", "Country");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Rihanna", "US", "Pop");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Guns N' Roses", "US", "Hard rock");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Gloria Estefan", "US", "Pop");
+INSERT INTO artists (name, country, genre)
+    VALUES ("Bob Marley", "Jamaica", "Reggae");
+
+CREATE TABLE songs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    artist TEXT,
+    title TEXT);
+
+INSERT INTO songs (artist, title)
+    VALUES ("Taylor Swift", "Shake it off");
+INSERT INTO songs (artist, title)
+    VALUES ("Rihanna", "Stay");
+INSERT INTO songs (artist, title)
+    VALUES ("Celine Dion", "My heart will go on");
+INSERT INTO songs (artist, title)
+    VALUES ("Celine Dion", "A new day has come");
+INSERT INTO songs (artist, title)
+    VALUES ("Shania Twain", "Party for two");
+INSERT INTO songs (artist, title)
+    VALUES ("Gloria Estefan", "Conga");
+INSERT INTO songs (artist, title)
+    VALUES ("Led Zeppelin", "Stairway to heaven");
+INSERT INTO songs (artist, title)
+    VALUES ("ABBA", "Mamma mia");
+INSERT INTO songs (artist, title)
+    VALUES ("Queen", "Bicycle Race");
+INSERT INTO songs (artist, title)
+    VALUES ("Queen", "Bohemian Rhapsody");
+INSERT INTO songs (artist, title)
+    VALUES ("Guns N' Roses", "Don't cry");
+
+/* Displaying the title of all the songs by the artist named 'Queen'. */
+SELECT title FROM songs WHERE artist = "Queen";
+
+/* Displays the name of all of the artists from the 'Pop' genre using IN. */
+SELECT name FROM artists WHERE genre IN ("Pop");
+
+/*  Display the title of all the songs from the 'Pop' artists. This query shows the use of IN on a nested subquery to display the results. */
+SELECT title FROM songs WHERE artist IN (SELECT name FROM artists WHERE genre = "Pop");
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--The Wordiest Author: GROUP BY, HAVING with Aggregate Data
+
+CREATE TABLE books (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    author TEXT,
+    title TEXT,
+    words INTEGER);
+    
+INSERT INTO books (author, title, words)
+    VALUES ("J.K. Rowling", "Harry Potter and the Philosopher's Stone", 79944);
+INSERT INTO books (author, title, words)
+    VALUES ("J.K. Rowling", "Harry Potter and the Chamber of Secrets", 85141);
+INSERT INTO books (author, title, words)
+    VALUES ("J.K. Rowling", "Harry Potter and the Prisoner of Azkaban", 107253);
+INSERT INTO books (author, title, words)
+    VALUES ("J.K. Rowling", "Harry Potter and the Goblet of Fire", 190637);
+INSERT INTO books (author, title, words)
+    VALUES ("J.K. Rowling", "Harry Potter and the Order of the Phoenix", 257045);
+INSERT INTO books (author, title, words)
+    VALUES ("J.K. Rowling", "Harry Potter and the Half-Blood Prince", 168923);
+INSERT INTO books (author, title, words)
+    VALUES ("J.K. Rowling", "Harry Potter and the Deathly Hallows", 197651);
+
+INSERT INTO books (author, title, words)
+    VALUES ("Stephenie Meyer", "Twilight", 118501);
+INSERT INTO books (author, title, words)
+    VALUES ("Stephenie Meyer", "New Moon", 132807);
+INSERT INTO books (author, title, words)
+    VALUES ("Stephenie Meyer", "Eclipse", 147930);
+INSERT INTO books (author, title, words)
+    VALUES ("Stephenie Meyer", "Breaking Dawn", 192196);
+    
+INSERT INTO books (author, title, words)
+    VALUES ("J.R.R. Tolkien", "The Hobbit", 95022);
+INSERT INTO books (author, title, words)
+    VALUES ("J.R.R. Tolkien", "Fellowship of the Ring", 177227);
+INSERT INTO books (author, title, words)
+    VALUES ("J.R.R. Tolkien", "Two Towers", 143436);
+INSERT INTO books (author, title, words)
+    VALUES ("J.R.R. Tolkien", "Return of the King", 134462);
+    
+SELECT * FROM books;
+
+/* Selecting all the authors who have written more than 1 million words. Displaying the word column as total_words. */
+SELECT author, SUM(words) AS total_words FROM books
+GROUP BY author
+HAVING total_words>=1000000;
+
+/* Selecting all the authors who have an average word of greater than 150,000. Displaying the word column as avg_words. */
+SELECT author, avg(words) as avg_words
+FROM books 
+GROUP BY author
+HAVING avg_words>150000;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Gradebook: Use of CASE
+
+CREATE TABLE student_grades (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    number_grade INTEGER,
+    fraction_completed REAL);
+    
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winston", 90, 0.805);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winnefer", 95, 0.901);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winsteen", 85, 0.906);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Wincifer", 66, 0.7054);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winster", 76, 0.5013);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winstonia", 82, 0.9045);
+    
+/* Displaying the following columns: name, number_grade and fraction_completed. The results displayed for fraction_completed will be renamed and rounded. */
+SELECT name, number_grade, ROUND(fraction_completed*100) AS percent_completed FROM student_grades;
+
+/* Displaying the total numbers of times students receive either an A,B,C or F grade using a CASE statement and listing the results in a separate column called letter_grade. */
+SELECT COUNT (*),
+CASE
+WHEN number_grade > 90 THEN "A"
+WHEN number_grade > 80 THEN "B"
+WHEN number_grade > 70 THEN "C"
+ELSE "F"
+END AS letter_grade
+FROM student_grades
+GROUP BY letter_grade;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Project: Card Game Results
+
+/*  Friendly Card Game Results:
+During this past winter, a few friends got together every Wednesday night for a friendly game of cards.  On some nights they'd play two games, but never the same game twice on the same night.  The usual players were Spunky Sam, Marcimus, Winston, and Hopper.  Sometimes, one of the friends couldn't make it, so there were only three players.  But sometimes they'd call another friend to fill-in.  In every game they played, the one with the hightest score was declared the winner.  These are their results:
+Created by: https://www.khanacademy.org/profile/brianduckworth
+*/
+
+CREATE TABLE card_games(id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date_played TEXT,
+    game_name TEXT,
+    player_name TEXT,
+    score INTEGER);
+    
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/07','Rummy','Spunky Sam',226);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/07','Rummy','Marcimus',418);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/07','Rummy','Winston',523);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/07','Rummy','Hopper',311);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Go Fish','Spunky Sam',7);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Go Fish','Marcimus',5);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Go Fish','Winston',4);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Go Fish','Hopper',10);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Crazy Eights','Spunky Sam',215);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Crazy Eights','Marcimus',167);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Crazy Eights','Winston',109);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/14','Crazy Eights','Hopper',192);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/21','Rummy','Spunky Sam',473);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/21','Rummy','Marcimus',324);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/21','Rummy','Hopper',516);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/28','Crazy Eights','Spunky Sam',119);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/28','Crazy Eights','Marcimus',212);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/28','Crazy Eights','Purple Pi',314);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/01/28','Crazy Eights','Hopper',252);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Go Fish','Spunky Sam',3);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Go Fish','Marcimus',11);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Go Fish','Winston',12);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Go Fish','Hopper',0);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Pitch','Spunky Sam',17);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Pitch','Marcimus',22);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Pitch','Winston',-3);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/04','Pitch','Hopper',9);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/11','Rummy','Amelia',525);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/11','Rummy','Marcimus',419);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/11','Rummy','Winston',316);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/11','Rummy','Hopper',398);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/18','Crazy Eights','Spunky Sam',119);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/18','Crazy Eights','Marcimus',231);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/18','Crazy Eights','Winston',153);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/18','Crazy Eights','Hopper',175);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/25','Pitch','Spunky Sam',12);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/25','Pitch','Marcimus',6);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/25','Pitch','Winston',21);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/25','Go Fish','Spunky Sam',6);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/25','Go Fish','Marcimus',7);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/02/25','Go Fish','Winston',13);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/04','Rummy','Spunky Sam',378);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/04','Rummy','Marcimus',327);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/04','Rummy','Winston',413);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/04','Rummy','Hopper',517);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/11','Pitch','Spunky Sam',-1);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/11','Pitch','Marcimus',-5);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/11','Pitch','Winston',7);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/11','Pitch','Hopper',22);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/18','Crazy Eights','Spunky Sam',91);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/18','Crazy Eights','Marcimus',153);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/18','Crazy Eights','Amelia',174);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/18','Crazy Eights','Mr. Pink',216);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/25','Rummy','Spunky Sam',416);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/25','Rummy','Marcimus',505);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/25','Rummy','Winston',397);
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/25','Rummy','Hopper',443);
+
+SELECT * FROM card_games;
+
+/* Displaying each player's name and the number of games they played. */
+SELECT player_name,
+SUM(CASE
+WHEN player_name = "Spunky Sam" THEN 1 
+WHEN player_name = "Marcimus" THEN 1
+WHEN player_name = "Amelia" THEN 1
+WHEN player_name = "Hopper" THEN 1
+WHEN player_name = "Mr. Pink" THEN 1
+WHEN player_name = "Purple Pi" THEN 1
+WHEN player_name = "Winston" THEN 1
+END) AS "GamesPlayed"
+FROM card_games
+GROUP BY player_name;
+
+/* Displaying the winner and the highest score for each game. */
+SELECT date_played, game_name,player_name AS "Winner", MAX(score)
+FROM card_games
+GROUP BY date_played, game_name;
+
+/* Displaying how many times each player won that was greater than 2. */
+SELECT player_name, count(player_name) AS GamesWon
+FROM
+(
+  SELECT card_games.date_played, card_games.game_name, card_games.player_name, card_games.score, winScores.topscore
+  FROM card_games
+  INNER JOIN 
+  (
+    SELECT date_played, game_name, MAX(score) AS topscore
+    FROM card_games
+    GROUP BY date_played, game_name
+  ) AS winScores ON winScores.date_played=card_games.date_played AND winScores.game_name=card_games.game_name AND winScores.topscore=card_games.score
+) AS gamesWon
+GROUP BY player_name
+HAVING gamesWon>1
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
