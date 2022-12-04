@@ -62,7 +62,7 @@ INSERT INTO songs (title, artist, mood, duration, released)
 /* Displaying only the titles from the table called songs */
 SELECT title FROM songs;  
 
-/* Displaying only the titles where the mood column returns epic or the realeased column returns when the year is greater than 1990 from the table called songs. */
+/* Displaying only the titles where the mood column returns epic or the released column returns when the year is greater than 1990 from the table called songs. */
 SELECT title FROM songs WHERE mood = "epic" OR released >1990;
 
 /* Displaying only the title where the mood column returns epic, the released column returns greater than 1990 and the duration returns less than 240 seconds.  */
