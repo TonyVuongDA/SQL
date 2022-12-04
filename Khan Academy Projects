@@ -394,7 +394,7 @@ WHERE p.name="Bobby McBobbyFace";
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
--- Customer's Orders
+-- Customer's Orders: OUTER JOIN
 
 CREATE TABLE customers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
