@@ -1,4 +1,4 @@
---Netflix Data Analytics Project
+--Netflix Data Analytics Project (PostgreSQL)
 
 1. How many movie titles are there in the database? (movies only, not tv shows)
 
@@ -13,10 +13,28 @@ FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info";
 
 3. List all the movies and tv shows in alphabetical order.
 
+SELECT type, title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" 
+WHERE type='Movie'
+ORDER BY title asc;
+
+SELECT type, title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info" 
+WHERE type='TV Show'
+ORDER BY title asc;
 
 4. Who was the Director for the movie Bright Star?
 
+SELECT people.director
+FROM "CharlotteChaze/BreakIntoTech"."netflix_people" AS people
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_titles_info" AS title
+ON people.show_id=title.show_id
+WHERE title.title='Bright Star';
 
 5. What is the oldest movie in the database and what year was it made?
 
-
+SELECT title, release_year
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type='Movie'
+ORDER BY release_year asc
+LIMIT 1; 
