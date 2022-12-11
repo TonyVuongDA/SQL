@@ -134,7 +134,7 @@ SELECT product, sum(quantity)*price AS revenue
 FROM BIT_DB.JanSales
 GROUP BY product 
 ORDER BY sum(quantity)*price DESC
-LIMIT 1
+LIMIT 1;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
