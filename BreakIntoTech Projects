@@ -294,3 +294,18 @@ INSERT INTO BIT_DB.CityBikeLanes values(58,2011, 2021, "Beaver", 3.5, 2.5, "no")
 INSERT INTO BIT_DB.CityBikeLanes values(59,2008, 2021,"Kensington",4,4.9,"yes");
 INSERT INTO BIT_DB.CityBikeLanes values(60,2002, 2021,"Mouse",4.5,4.3,"no");
 
+-- Common Temporary Expressions (CTE)/Temp Tables:
+-- Create a list of all the bike lanes that have an average safety rating of 4.0 or higher. 
+-- also display the average safety rating for each of those bike lanes, and a label that says "Safe Lane".
+WITH safety_avg_cte AS 
+(
+SELECT street, AVG(safetyrating) AS rating
+FROM citybikelanes
+GROUP BY street
+)
+SELECT street, rating, 'Safe Lane'  AS 'label'
+FROM safety_avg_cte
+WHERE rating>=4;
+
+
+
