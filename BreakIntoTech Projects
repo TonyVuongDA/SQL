@@ -136,6 +136,13 @@ GROUP BY product
 ORDER BY sum(quantity)*price DESC
 LIMIT 1;
 
+14. Show the account numbers, the count of order IDs, product, quantity, price, order date, and location for all orders that were placed in February.
+SELECT c.acctnum, COUNT(feb.orderID) AS 'OrderID Count', feb.product, feb.quantity, feb.price, feb.orderdate, feb.location
+FROM BIT_DB.FebSales AS feb
+INNER JOIN BIT_DB.customers AS c
+ON c.order_id=feb.orderID
+GROUP BY c.acctnum, feb.product, feb.quantity, feb.price, feb.orderdate, feb.location
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --Spotify Data
